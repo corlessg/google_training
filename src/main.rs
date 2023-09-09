@@ -3,8 +3,13 @@
 pub fn luhn(cc_number: &str) -> bool {
     let mut sum = 0;
     let mut odd = false;
+    
+    let trimmed: String = cc_number.chars().filter(|&c| !c.is_whitespace()).collect();
 
-    for c in cc_number.chars().filter(|c| !c.is_whitespace()).rev() {
+    if trimmed.len() < 2 {
+        return false;
+    }
+    for c in trimmed.chars().rev() {
         if c.is_digit(10) {
             let mut digit: u32 = c.to_digit(10).unwrap();
 
