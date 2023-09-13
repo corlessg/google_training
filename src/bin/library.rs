@@ -42,12 +42,18 @@ impl Library {
     }
 
     fn print_books(&self) {
-       for (idx, book) in self.books.iter().enumerate() {
+       for book in self.books.iter() {
         println!("name: {}, year: {}",book.title,book.year);       }
     }
 
-    fn oldest_book(self) -> Option<u16> {
-        // build loop through books to test for lowest value
+    fn oldest_book(&self) -> Option<&Book> {
+        let mut oldest: Option<&Book> = None;
+        for book in self.books.iter() {
+            if oldest.is_none() || oldest.unwrap().year < book.year {
+                oldest = Some(book);
+            }
+        }
+        oldest
     }
 }
 
@@ -58,7 +64,6 @@ impl Library {
 // also need to update the variable bindings within main.
 fn main() {
     let mut library = Library::new();
-    println!("Test");
     println!("The library is empty: library.is_empty() -> {}", library.is_empty());
     //
     library.add_book(Book::new("Lord of the Rings", 1954));
@@ -74,6 +79,6 @@ fn main() {
        None => println!("The library is empty!"),
     }
     
-    //println!("The library has {} books", library.len());
+    println!("The library has {} books", library.len());
     //library.print_books();
 }
